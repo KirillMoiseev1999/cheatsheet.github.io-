@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шпаргалка начинающего верстальщика</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #1E1E2E;
+            --bg-light: #F8F9FA;
+            --code-text: #CDD6F4;
+            --accent-purple: #6E6DCC;
+            --border-radius: 12px;
+            --shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F1F5FF;
+            color: #1A1A2E;
+            padding: 40px 20px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .main-header { text-align: center; margin-bottom: 50px; }
+        .main-header h1 { font-size: 42px; font-weight: 700; color: #32325D; }
+        .main-header p { font-size: 18px; color: var(--accent-purple); }
+
+        .example-block {
+            background: #FFFFFF;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
+            overflow: hidden;
+            border: 1px solid #D3D8FF;
+        }
+
+        .block-title {
+            padding: 16px 24px;
+            background: #F4F6FF;
+            border-bottom: 2px solid #B7BBFF;
+            font-size: 20px;
+            font-weight: 700;
+            color: #32325D;
+        }
+
+        .grid-2 {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 250px;
+        }
+
+        .col-code {
+            flex: 1 1 50%;
+            background: var(--bg-dark);
+            padding: 24px;
+            color: var(--code-text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .col-preview {
+            flex: 1 1 50%;
+            background: var(--bg-light);
+            padding: 30px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 2px solid #E2E8F0;
+        }
+
+        /* Подсветка кода */
+        .tag { color: #F38BA8; }
+        .attr { color: #F9E2AF; }
+        .val { color: #A6E3A1; }
+        .comment { color: #6C7086; font-style: italic; }
+        .css-prop { color: #89B4FA; }
+        .css-val { color: #F9E2AF; }
+        .css-class { color: #F5E0DC; font-weight: bold; }
+
+        /* Стили для превью */
+        .example-heading-1 { color: #32325D; margin: 0 0 10px; font-size: 28px; font-weight: 700; }
+        .example-heading-2 { color: #454483; margin: 0 0 8px; font-size: 22px; font-weight: 600; }
+        .example-heading-3 { color: #6E6DCC; margin: 0 0 5px; font-size: 18px; font-weight: 600; }
+        .example-text { margin: 5px 0; line-height: 1.6; }
+        .example-list { margin: 10px 0 0 20px; padding-left: 0; }
+
+        .link-demo { color: #6E6DCC; font-weight: 600; text-decoration: underline; }
+        .link-demo:hover { color: #FF7243; }
+
+        .box-model-demo {
+            background: white;
+            border: 4px solid #6E6DCC;
+            padding: 24px;
+            margin: 10px 0;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+        }
+        .box-model-demo .inner-content {
+            background: #E6E9FF;
+            padding: 15px;
+            border-radius: 6px;
+            color: #32325D;
+            font-weight: 600;
+        }
+
+        .flex-demo-container {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            background: #FFFFFF;
+            padding: 16px;
+            border: 2px dashed #B7BBFF;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        .flex-demo-item {
+            background: #6E6DCC;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .media-img { max-width: 100%; max-height: 120px; border-radius: 8px; margin-top: 5px; border: 1px solid #D3D8FF; }
+        .media-audio { width: 100%; margin: 10px 0; }
+        .media-video { width: 100%; height: 180px; border-radius: 8px; border: none; margin-top: 5px; background: #000; }
+
+        .info-box {
+            background: #FFF3E0;
+            border-left: 5px solid #FF7243;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+            color: #5D4037;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { flex-direction: column; }
+            .col-preview { border-left: none; border-top: 2px solid #E2E8F0; }
+            .main-header h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="main-header">
+            <h1>📖 Шпаргалка начинающего верстальщика</h1>
+            <p>Слева — код в редакторе (VS Code). Справа — результат в браузере.</p>
+        </header>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 1: БАЗОВАЯ СТРУКТУРА HTML -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">📄 1. Базовая структура (Паспорт сайта)</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="comment">&lt;!-- Объявление браузеру: это HTML5 --&gt;</span><br>
+                    <span class="tag">&lt;!DOCTYPE html&gt;</span><br>
+                    <br>
+                    <span class="tag">&lt;html&gt;</span> <span class="comment">&lt;!-- Корень всего сайта --&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;head&gt;</span> <span class="comment">&lt;!-- Шапка (техническая часть) --&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;meta</span> <span class="attr">charset=</span><span class="val">"UTF-8"</span><span class="tag">&gt;</span> <span class="comment">&lt;!-- Русские буквы --&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;title&gt;</span>Моя первая страница<span class="tag">&lt;/title&gt;</span> <span class="comment">&lt;!-- Заголовок вкладки --&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;/head&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;body&gt;</span> <span class="comment">&lt;!-- Тело (всё, что видят люди) --&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Здесь будет текст, картинки, кнопки...<br>
+                    &nbsp;&nbsp;<span class="tag">&lt;/body&gt;</span><br>
+                    <span class="tag">&lt;/html&gt;</span>
+                </div>
+                <div class="col-preview" style="background: #fff; text-align: center; color: #333;">
+                    <span style="font-size: 12px; color: #999;">(Вкладка браузера)</span><br>
+                    <h2 style="margin: 10px 0 5px; color: #32325D;">Моя первая страница</h2>
+                    <p style="margin: 0;">Здесь будет текст, картинки, кнопки...</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 2: ЗАГОЛОВКИ -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">🔤 2. Заголовки (Иерархия текста)</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="tag">&lt;h1&gt;</span>Главный заголовок (1 раз на страницу)<span class="tag">&lt;/h1&gt;</span><br>
+                    <span class="tag">&lt;h2&gt;</span>Подзаголовок раздела<span class="tag">&lt;/h2&gt;</span><br>
+                    <span class="tag">&lt;h3&gt;</span>Подзаголовок внутри раздела<span class="tag">&lt;/h3&gt;</span><br>
+                </div>
+                <div class="col-preview">
+                    <h1 class="example-heading-1">Главный заголовок (1 раз на страницу)</h1>
+                    <h2 class="example-heading-2">Подзаголовок раздела</h2>
+                    <h3 class="example-heading-3">Подзаголовок внутри раздела</h3>
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>Правило для журналиста:</strong> <code>&lt;h1&gt;</code> используется только <strong>1 раз</strong> на странице (это название статьи/сайта). <code>&lt;h2&gt;</code> и <code>&lt;h3&gt;</code> помогают поисковикам (Яндекс, Google) понимать структуру вашего текста.
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 3: ТЕКСТ И ФОРМАТИРОВАНИЕ -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">📝 3. Абзацы, жирный, курсив и переносы</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="tag">&lt;p&gt;</span>Это обычный абзац текста. Браузер сам переносит строки.<span class="tag">&lt;/p&gt;</span><br><br>
+
+                    <span class="tag">&lt;p&gt;</span><br>
+                    &nbsp;&nbsp;Это текст, где мы выделяем <span class="tag">&lt;strong&gt;</span>очень важное слово<span class="tag">&lt;/strong&gt;</span><br>
+                    &nbsp;&nbsp;и добавляем <span class="tag">&lt;em&gt;</span>логическое ударение (курсив)<span class="tag">&lt;/em&gt;</span>.<br>
+                    <span class="tag">&lt;/p&gt;</span><br><br>
+
+                    <span class="tag">&lt;br&gt;</span> <span class="comment">&lt;!-- Принудительный перенос строки (для стихов или адресов) --&gt;</span>
+                </div>
+                <div class="col-preview">
+                    <p class="example-text">Это обычный абзац текста. Браузер сам переносит строки.</p>
+                    <p class="example-text">
+                        Это текст, где мы выделяем <strong>очень важное слово</strong><br>
+                        и добавляем <em>логическое ударение (курсив)</em>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 4: СПИСКИ -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">📋 4. Списки (Маркированные и нумерованные)</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="comment">&lt;!-- Маркированный список (точечки) --&gt;</span><br>
+                    <span class="tag">&lt;ul&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span>Первый пункт списка<span class="tag">&lt;/li&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span>Второй пункт списка<span class="tag">&lt;/li&gt;</span><br>
+                    <span class="tag">&lt;/ul&gt;</span><br><br>
+
+                    <span class="comment">&lt;!-- Нумерованный список (цифры) --&gt;</span><br>
+                    <span class="tag">&lt;ol&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span>Шаг первый<span class="tag">&lt;/li&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;li&gt;</span>Шаг второй<span class="tag">&lt;/li&gt;</span><br>
+                    <span class="tag">&lt;/ol&gt;</span>
+                </div>
+                <div class="col-preview">
+                    <h4 style="margin: 0 0 5px;">Маркированный список (факты):</h4>
+                    <ul class="example-list">
+                        <li>Первый пункт списка</li>
+                        <li>Второй пункт списка</li>
+                    </ul>
+                    <br>
+                    <h4 style="margin: 0 0 5px;">Нумерованный список (инструкция):</h4>
+                    <ol class="example-list" style="margin-left: 20px;">
+                        <li>Шаг первый</li>
+                        <li>Шаг второй</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>Совет журналисту:</strong> Списки идеально подходят для рубрик <strong>«5 фактов»</strong> или <strong>«Топ-3»</strong>. Они делают текст структурированным и удобным для чтения.
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 5: ССЫЛКИ -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">🔗 5. Ссылки (Главный инструмент интернета)</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="comment">&lt;!-- Ссылка, которая откроется в новой вкладке --&gt;</span><br>
+                    <span class="tag">&lt;a</span> <span class="attr">href=</span><span class="val">"https://vk.com"</span> <span class="attr">target=</span><span class="val">"_blank"</span><span class="tag">&gt;</span><br>
+                    &nbsp;&nbsp;Текст, по которому нужно кликнуть (Например: "Мой ВК")<br>
+                    <span class="tag">&lt;/a&gt;</span>
+                </div>
+                <div class="col-preview">
+                    <p>
+                        <a href="https://vk.com" target="_blank" class="link-demo">
+                            Текст, по которому нужно кликнуть (Например: "Мой ВК")
+                        </a>
+                    </p>
+                    <div class="info-box" style="margin-top: 10px;">
+                        <strong>Атрибут:</strong> <code>target="_blank"</code> заставляет браузер открыть ссылку в новой вкладке. Это критически важно для журналистов, чтобы читатель не ушел с вашего сайта навсегда!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 6: МЕДИА -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">🎬 6. Медиа: Картинки, Аудио, Видео</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="comment">&lt;!-- 1. Картинка --&gt;</span><br>
+                    <span class="tag">&lt;img</span> <span class="attr">src=</span><span class="val">"https://via.placeholder.com/300x120/6E6DCC/FFFFFF?text=МЦ+ИКИТ"</span> <span class="attr">alt=</span><span class="val">"Фото с мероприятия ИКИТ"</span><span class="tag">&gt;</span><br><br>
+                    
+                    <span class="comment">&lt;!-- 2. Аудио (Music) --&gt;</span><br>
+                    <span class="tag">&lt;audio</span> <span class="attr">controls</span> <span class="attr">src=</span><span class="val">"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"</span><span class="tag">&gt;&lt;/audio&gt;</span><br><br>
+                    
+                    <span class="comment">&lt;!-- 3. Видео (ВК) --&gt;</span><br>
+                    <span class="tag">&lt;iframe</span><br>
+                    &nbsp;&nbsp;<span class="attr">src=</span><span class="val">"https://vkvideo.ru/video_ext.php?oid=-101721701&id=456239611&hash=b6bc1761e7576d30&hd=4"</span><br>
+                    &nbsp;&nbsp;<span class="attr">width=</span><span class="val">"100%"</span> <span class="attr">allowfullscreen</span><span class="tag">&gt;</span><br>
+                    <span class="tag">&lt;/iframe&gt;</span>
+                </div>
+                <div class="col-preview">
+                    <p style="font-weight: 600; margin: 0;">🖼️ Фото:</p>
+                    <img src="https://via.placeholder.com/300x120/6E6DCC/FFFFFF?text=МЦ+ИКИТ" alt="Фото с мероприятия ИКИТ" class="media-img">
+                    
+                    <p style="font-weight: 600; margin: 15px 0 0;">🎵 Аудио (встроенный плеер):</p>
+                    <audio controls class="media-audio">
+                        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                        Ваш браузер не поддерживает аудио.
+                    </audio>
+                    
+                    <p style="font-weight: 600; margin: 15px 0 0;">🎬 Видео (ВК):</p>
+                    <iframe class="media-video" 
+                        src="https://vkvideo.ru/video_ext.php?oid=-101721701&id=456239611&hash=b6bc1761e7576d30&hd=4" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>Лайфхак:</strong> Видео и аудио не хранят на своем сайте. Аудио загружают на облако, а видео встраивают через тег <code>&lt;iframe&gt;</code> с ВК или YouTube, чтобы сайт работал быстро.
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 7: CSS СЕЛЕКТОРЫ -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">🎯 7. CSS Селекторы (Кому применяем стиль)</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="comment">/* По тегу (все абзацы) */</span><br>
+                    <span class="css-prop">p</span> { <span class="css-prop">color</span>: <span class="css-val">blue</span>; }<br><br>
+
+                    <span class="comment">/* По классу (ставим точку!) */</span><br>
+                    <span class="css-class">.important</span> { <span class="css-prop">font-weight</span>: <span class="css-val">bold</span>; }<br><br>
+
+                    <span class="comment">/* По ID (ставим решетку!) */</span><br>
+                    <span class="css-class">#header</span> { <span class="css-prop">background</span>: <span class="css-val">black</span>; }
+                </div>
+                <div class="col-preview">
+                    <h4 style="margin: 0 0 10px;">Как это работает в HTML:</h4>
+                    <p style="background: #E6E9FF; padding: 5px 10px; border-radius: 4px; font-family: monospace;">
+                        &lt;p&gt;Синий текст (по тегу &lt;code&gt;p&lt;/code&gt;)&lt;/p&gt;<br><br>
+                        &lt;p <strong>class="important"</strong>&gt;Жирный текст (по классу)&lt;/p&gt;<br><br>
+                        &lt;div <strong>id="header"</strong>&gt;Черный фон (по ID)&lt;/div&gt;
+                    </p>
+                    <div class="info-box" style="margin-top: 10px;">
+                        <strong>Важно:</strong> Класс (class) можно использовать <strong>много раз</strong>. ID — только <strong>один раз</strong> на странице.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 8: БЛОЧНАЯ МОДЕЛЬ -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">📦 8. Блочная модель (Как устроен любой блок)</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="comment">&lt;!-- HTML --&gt;</span><br>
+                    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"box-model"</span><span class="tag">&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"inner-content"</span><span class="tag">&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Content (Контент)<br>
+                    &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br>
+                    <span class="tag">&lt;/div&gt;</span><br><br>
+
+                    <span class="comment">/* CSS стили */</span><br>
+                    <span class="css-class">.box-model</span> {<br>
+                    &nbsp;&nbsp;<span class="css-prop">border</span>: <span class="css-val">4px solid #6E6DCC</span>; <span class="comment">/* Рамка (Толщина, стиль, цвет) */</span><br>
+                    &nbsp;&nbsp;<span class="css-prop">padding</span>: <span class="css-val">24px</span>; <span class="comment">/* Воздух внутри рамки */</span><br>
+                    &nbsp;&nbsp;<span class="css-prop">margin</span>: <span class="css-val">10px 0</span>; <span class="comment">/* Дистанция снаружи (сверху/снизу) */</span><br>
+                    &nbsp;&nbsp;<span class="css-prop">border-radius</span>: <span class="css-val">8px</span>; <span class="comment">/* Скругленные уголки */</span><br>
+                    }<br><br>
+                    <span class="css-class">.inner-content</span> {<br>
+                    &nbsp;&nbsp;<span class="css-prop">background</span>: <span class="css-val">#E6E9FF</span>;<br>
+                    &nbsp;&nbsp;<span class="css-prop">padding</span>: <span class="css-val">15px</span>;<br>
+                    }
+                </div>
+                <div class="col-preview">
+                    <div class="box-model-demo">
+                        <div class="inner-content">
+                            <strong>Content (Контент)</strong><br>
+                            <span style="font-size: 12px;">Текст или картинка внутри</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 14px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px;">
+                        <span style="background: #6E6DCC; color: white; padding: 2px 10px; border-radius: 12px;">Border (Рамка)</span>
+                        <span style="background: #B7BBFF; color: #32325D; padding: 2px 10px; border-radius: 12px;">Padding (Внутр. отступ)</span>
+                        <span style="background: #FFDE36; color: #32325D; padding: 2px 10px; border-radius: 12px;">Margin (Внешн. отступ)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 9: FLEXBOX -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">🧱 9. Flexbox (Выстраиваем элементы в ряд)</div>
+            <div class="grid-2">
+                <div class="col-code">
+                    <span class="comment">/* HTML: Родительский контейнер (flex-container) */</span><br>
+                    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"flex-container"</span><span class="tag">&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"flex-item"</span><span class="tag">&gt;</span>1<span class="tag">&lt;/div&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"flex-item"</span><span class="tag">&gt;</span>2<span class="tag">&lt;/div&gt;</span><br>
+                    &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="val">"flex-item"</span><span class="tag">&gt;</span>3<span class="tag">&lt;/div&gt;</span><br>
+                    <span class="tag">&lt;/div&gt;</span><br><br>
+
+                    <span class="comment">/* CSS стили для контейнера (.flex-container) */</span><br>
+                    <span class="css-class">.flex-container</span> {<br>
+                    &nbsp;&nbsp;<span class="css-prop">display</span>: <span class="css-val">flex</span>; <span class="comment">/* Включает флекс-режим */</span><br>
+                    &nbsp;&nbsp;<span class="css-prop">gap</span>: <span class="css-val">12px</span>; <span class="comment">/* Расстояние между элементами */</span><br>
+                    &nbsp;&nbsp;<span class="css-prop">justify-content</span>: <span class="css-val">space-between</span>; <span class="comment">/* По краям контейнера */</span><br>
+                    &nbsp;&nbsp;<span class="css-prop">align-items</span>: <span class="css-val">center</span>; <span class="comment">/* По вертикали в центре */</span><br>
+                    &nbsp;&nbsp;<span class="css-prop">flex-direction</span>: <span class="css-val">row</span>; <span class="comment">/* Направление ряд (по умолчанию) */</span><br>
+                    }<br><br>
+                    <span class="comment">/* Стили для самих элементов (.flex-item) */</span><br>
+                    <span class="css-class">.flex-item</span> {<br>
+                    &nbsp;&nbsp;<span class="css-prop">background</span>: <span class="css-val">#6E6DCC</span>;<br>
+                    &nbsp;&nbsp;<span class="css-prop">padding</span>: <span class="css-val">12px 24px</span>;<br>
+                    }
+                </div>
+                <div class="col-preview">
+                    <h4 style="margin: 0 0 10px;">Результат:</h4>
+                    <div class="flex-demo-container">
+                        <div class="flex-demo-item">1</div>
+                        <div class="flex-demo-item">2</div>
+                        <div class="flex-demo-item">3</div>
+                    </div>
+                    <div style="font-size: 13px; color: #555; margin-top: 15px; line-height: 1.6;">
+                        <strong>Свойства Flex-контейнера:</strong><br>
+                        <code>flex-direction: row</code> (в ряд) или <code>column</code> (в столбик).<br>
+                        <code>justify-content: center</code> / <code>space-between</code> (по горизонтали).<br>
+                        <code>align-items: center</code> / <code>flex-start</code> (по вертикали).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 10: ШПАРГАЛКА СВОЙСТВ CSS -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">📚 10. Частые свойства CSS (Шпаргалка)</div>
+            <div style="padding: 24px; background: #fff;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <thead>
+                        <tr style="background: #F4F6FF; border-bottom: 2px solid #B7BBFF;">
+                            <th style="padding: 12px; text-align: left;">Свойство</th>
+                            <th style="padding: 12px; text-align: left;">За что отвечает</th>
+                            <th style="padding: 12px; text-align: left;">Примеры значений</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>color</code></td>
+                            <td>Цвет текста</td>
+                            <td><code>red</code>, <code>#ff0000</code>, <code>rgb(255,0,0)</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>background-color</code></td>
+                            <td>Цвет фона блока</td>
+                            <td><code>#f0f4f8</code>, <code>white</code>, <code>black</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>font-size</code></td>
+                            <td>Размер шрифта</td>
+                            <td><code>16px</code>, <code>24pt</code>, <code>1.5em</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>font-family</code></td>
+                            <td>Шрифт букв</td>
+                            <td><code>Arial</code>, <code>sans-serif</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>font-weight</code></td>
+                            <td>Жирность текста</td>
+                            <td><code>bold</code>, <code>normal</code>, <code>700</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>text-align</code></td>
+                            <td>Выравнивание текста</td>
+                            <td><code>left</code>, <code>center</code>, <code>right</code>, <code>justify</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>padding</code></td>
+                            <td>Отступы внутри рамки</td>
+                            <td><code>10px</code>, <code>15px 20px</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>margin</code></td>
+                            <td>Отступы снаружи рамки</td>
+                            <td><code>0 auto</code>, <code>20px</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>border</code></td>
+                            <td>Рамка вокруг блока</td>
+                            <td><code>2px solid #ccc</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>border-radius</code></td>
+                            <td>Скругление уголков</td>
+                            <td><code>8px</code>, <code>50%</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>max-width</code></td>
+                            <td>Ограничение ширины</td>
+                            <td><code>900px</code>, <code>100%</code></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #E2E8F0;">
+                            <td style="padding: 10px;"><code>box-shadow</code></td>
+                            <td>Тень от блока</td>
+                            <td><code>0 4px 10px rgba(0,0,0,0.1)</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- ============================================ -->
+        <!-- БЛОК 11: ПОЛЕЗНЫЕ СОВЕТЫ -->
+        <!-- ============================================ -->
+        <div class="example-block">
+            <div class="block-title">💡 11. Полезные советы для журналистов</div>
+            <div style="padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: #fff;">
+                <div style="border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px;">
+                    <h4 style="color: #32325D; margin: 0 0 5px;">🦴 F12 — Рентген сайта</h4>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Нажмите <code>F12</code> в браузере. Откроется панель разработчика. Вы можете подсмотреть цвет заголовка или шрифт на любом сайте.</p>
+                </div>
+                <div style="border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px;">
+                    <h4 style="color: #32325D; margin: 0 0 5px;">📧 E-mail рассылки</h4>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Верстая письмо, используйте тег <code>&lt;table&gt;</code>, а не <code>&lt;div&gt;</code>. Почтовики (Gmail, Mail) ломают <code>&lt;div&gt;</code>, но любят таблицы.</p>
+                </div>
+                <div style="border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px;">
+                    <h4 style="color: #32325D; margin: 0 0 5px;">🖼️ Инфографика</h4>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Поисковики не читают текст, нарисованный на картинках. Дублируйте ключевые мысли обычным текстом под инфографикой.</p>
+                </div>
+                <div style="border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px;">
+                    <h4 style="color: #32325D; margin: 0 0 5px;">⚡ Не забывайте закрывать теги</h4>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Любой тег — парный. Открыли <code>&lt;div&gt;</code> — поставьте <code>&lt;/div&gt;</code>. Если забудете, весь код ниже сломается.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
